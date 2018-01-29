@@ -1,0 +1,22 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add actor</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link type="text/css" rel="stylesheet" th:href="@{css/bootstrap.min.css}" />
+</head>
+<body>
+<h1>New actor</h1>
+<div class="col-md-4">
+    <form th:object="${actor}" th:action="@{saveactor}" action="#" method="post">
+        <input type="text" th:field="*{firstName}" class="form-control"
+               placeholder="firstName"/>
+        <div style="clear: both; display: block; height: 10px;"></div>
+        <input type="text" th:field="*{lastName}" class="form-control"
+               placeholder="lastName"/>
+        <div style="clear: both; display: block; height: 10px;"></div>
+        <input type="submit" class="btn btn-success" value="Save"></input>
+    </form>
+</div>
+</body>
+</html>

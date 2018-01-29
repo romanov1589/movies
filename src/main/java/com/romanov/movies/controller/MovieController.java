@@ -27,13 +27,13 @@ public class MovieController {
         return "movies";
     }
 
-    @RequestMapping(value = "add")
+    @RequestMapping(value = "addmovie")
     public String addMovie(Model model){
         model.addAttribute("movie", new Movie());
         return "addMovie";
     }
 
-    @RequestMapping(value = "save", method = RequestMethod.POST)
+    @RequestMapping(value = "savemovie", method = RequestMethod.POST)
     public String save(Movie movie){
         movieRepository.save(movie);
         return "redirect:/movies";
