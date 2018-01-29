@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Studentlist</title>
+    <title>Movies List</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link type="text/css" rel="stylesheet" th:href="@{css/bootstrap.min.css}" />
 
@@ -38,13 +38,11 @@
             </td>
             <td>
                 <a th:href="@{/addMovieActor/{id}(id=${movie.id})}" class="btn btn-success btn-xs">Add Actor</a>
-                <a th:href="@{/delete/{id}(id=${movie.id})}" class="btn btn-danger btn-xs">Delete</a>
+                <a th:href="@{/deletemovie/{id}(id=${movie.id})}" class="btn btn-danger btn-xs">Delete</a>
             </td>
         </tr>
     </table>
     <a href="/addmovie" class="btn btn-success">Add Movie</a>
-    <a href="/addactor" class="btn btn-success">Add Actor</a>
-
 </div>
 </body>
 </html>

@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Actors List</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link type="text/css" rel="stylesheet" th:href="@{css/bootstrap.min.css}" />
+
+</head>
+<body>
+<div class="col-md-4">
+    <h1>Actors</h1>
+</div>
+<div class="col-md-4">
+    <h3 th:inline="text">Welcome</h3>
+</div>
+
+<div style="padding:0 20px">
+    <table class="table table-striped">
+        <tr>
+            <th>Actor</th>
+            <th>Actions</th>
+        </tr>
+        <tr th:each = "actor : ${actors}">
+            <td th:text="${actor.firstName} + ' ' + ${actor.lastName}"></td>
+            <td>
+                <a href="/editactor" class="btn btn-warning btn-xs">Edit</a>
+                <a th:href="@{/deleteactor/{id}(id=${actor.actorid})}" class="btn btn-danger btn-xs">Delete</a>
+            </td>
+        </tr>
+    </table>
+    <a href="/addactor" class="btn btn-success">Add Actor</a>
+
+</div>
+</body>
+</html>

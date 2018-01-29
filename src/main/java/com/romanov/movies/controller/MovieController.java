@@ -51,7 +51,7 @@ public class MovieController {
         model.addAttribute("movie", movieRepository.findOne(movieId));
         return "addMovieActor";
     }
-    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/deletemovie/{id}", method = RequestMethod.GET)
     public String editRemoveMovie(@PathVariable("id") Integer movieId, Model model) {
         movieRepository.delete(movieId);
         return "redirect:/movies";
