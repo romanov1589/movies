@@ -1,0 +1,49 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Studentlist</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link type="text/css" rel="stylesheet" th:href="@{css/bootstrap.min.css}" />
+
+</head>
+<body>
+<div class="col-md-4">
+    <h1>Movies</h1>
+</div>
+<div class="col-md-4">
+    <h3 th:inline="text">Welcome</h3>
+</div>
+
+<div style="padding:0 20px">
+    <table class="table table-striped">
+        <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Runtime</th>
+            <th>Release</th>
+            <th>Director</th>
+            <th>Actors</th>
+            <th>Actions</th>
+        </tr>
+        <tr th:each = "movie : ${movies}">
+            <td th:text="${movie.title}"></td>
+            <td th:text="${movie.description}"></td>
+            <td th:text="${movie.runtime}"></td>
+            <td th:text="${movie.release_date}"></td>
+            <td th:text="${movie.director}"></td>
+            <td>
+				<span th:each="actor,iterStat : ${movie.actors}">
+					<span th:text="${actor.firstName} + ' ' + ${actor.lastName}"/><th:block th:if="${!iterStat.last}">,</th:block>
+				</span>
+            </td>
+            <td>
+                <a th:href="@{/addMovieActor/{id}(id=${movie.id})}" class="btn btn-success btn-xs">Add Actor</a>
+                <a th:href="@{/delete/{id}(id=${movie.id})}" class="btn btn-danger btn-xs">Delete</a>
+            </td>
+        </tr>
+    </table>
+    <a href="/add" class="btn btn-success">Add Movie</a>
+
+</div>
+</body>
+</html>

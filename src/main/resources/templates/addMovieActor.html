@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Developer</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link type="text/css" rel="stylesheet" th:href="@{../css/bootstrap.min.css}" />
+</head>
+<body>
+<h1>Add actor</h1>
+<form th:action="@{/movie/{id}/actors(id=${movie.id})}" method="get" enctype="multipart/form-data" >
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">Student info</div>
+            <div class="panel-body" style="padding-left: 5px;">
+                Title: <b th:text="${movie.title}" /><br/>
+                Description: <span th:text="${movie.description}" /><br/>
+                Runtime: <span th:text="${movie.runtime}" /><br/>
+                Release: <span th:text="${movie.release_date}" /><br/>
+                Director: <span th:text="${movie.director}" /><br/>
+                <br/>Actors:
+                <span th:each="actor : ${movie.actors}">
+					<br/>&nbsp;&nbsp;<span th:text="${actor.firstName}" /> <span th:text="${actor.lastName}" />
+				</span>
+                <br/>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <select class="form-control" name="actorId">
+                <option th:each="actor : ${actors}"
+                        th:value="${actor.actorid}"
+                        th:text="${actor.firstName} + ' ' + ${actor.lastName}">Actor</option>
+            </select>
+        </div>
+        <input type="submit" class="btn btn-success" value="Add actor"/>
+    </div>
+</form>
+</body>
+</html>

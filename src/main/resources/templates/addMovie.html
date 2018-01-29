@@ -1,0 +1,31 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add movie</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link type="text/css" rel="stylesheet" th:href="@{css/bootstrap.min.css}" />
+</head>
+<body>
+<h1>New movie</h1>
+<div class="col-md-4">
+    <form th:object="${movie}" th:action="@{save}" action="#" method="post">
+        <input type="text" th:field="*{title}" class="form-control"
+               placeholder="Title"/>
+        <div style="clear: both; display: block; height: 10px;"></div>
+        <input type="text" th:field="*{description}" class="form-control"
+               placeholder="Description"/>
+        <div style="clear: both; display: block; height: 10px;"></div>
+        <input type="text" th:field="*{runtime}" class="form-control"
+               placeholder="HH:MM:SS"/>
+        <div style="clear: both; display: block; height: 10px;"></div>
+        <input type="text" th:field="*{release_date}" class="form-control"
+               placeholder="YYYY-MM-DD"/>
+        <div style="clear: both; display: block; height: 10px;"></div>
+        <input type="text" th:field="*{director}" class="form-control"
+               placeholder="Director"/>
+        <div style="clear: both; display: block; height: 10px;"></div>
+        <input type="submit" class="btn btn-success" value="Save"></input>
+    </form>
+</div>
+</body>
+</html>
