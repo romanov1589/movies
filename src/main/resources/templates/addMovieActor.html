@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Developer</title>
+    <title>Add actors to movie</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link type="text/css" rel="stylesheet" th:href="@{../css/bootstrap.min.css}" />
 </head>
@@ -10,7 +10,7 @@
 <form th:action="@{/movie/{id}/actors(id=${movie.id})}" method="get" enctype="multipart/form-data" >
     <div class="col-md-4">
         <div class="panel panel-default">
-            <div class="panel-heading">Student info</div>
+            <div class="panel-heading">Movie info</div>
             <div class="panel-body" style="padding-left: 5px;">
                 Title: <b th:text="${movie.title}" /><br/>
                 Description: <span th:text="${movie.description}" /><br/>
