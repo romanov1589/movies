@@ -9,13 +9,16 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import javax.validation.Valid;
 import java.util.List;
 
 @Controller
-public class ActorController {
+public class ActorController extends WebMvcConfigurerAdapter {
     @Autowired
     private ActorRepository actorRepository;
 
@@ -32,26 +35,23 @@ public class ActorController {
         return "addActor";
     }
 
-    @RequestMapping(value = "saveactor", method = RequestMethod.POST)
-    public String save(Actor actor){
-        actorRepository.save(actor);
-        return "redirect:/actors";
-    }
-    @RequestMapping(value = "/updateactor/{id}", method = RequestMethod.PATCH)
-    public String updateActor(@ModelAttribute Actor actor) {
-        actorRepository.save(actor);
-        return "redirect:/actors";
-    }
+    @PostMapping(value = "saveactor")
+    public String save(@ModelAttribute @Valid Actor actor, BindingResult bindingResult){
 
-//    @RequestMapping(value="/updateactor", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
-//    public String update(@RequestBody Actor actor) {
-//        actorRepository.save(actor);
-//        return "redirect:/actors";
-//    }
+        if(bindingResult.hasErrors()){
+            return "addActor";
+        }
+            actorRepository.save(actor);
+            return "redirect:/actors";
+    }
 
     @RequestMapping(value = "/deleteactor/{id}", method = RequestMethod.GET)
     public String removeActor(@PathVariable("id") Integer actorId, Model model) {
-        actorRepository.delete(actorId);
+        try {
+            actorRepository.delete(actorId);
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        }
         return "redirect:/actors";
     }
     @RequestMapping(value = "/editactor/{id}", method = RequestMethod.GET)

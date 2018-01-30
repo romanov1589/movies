@@ -8,23 +8,28 @@
 <body>
 <h1>New movie</h1>
 <div class="col-md-4">
-    <form th:object="${movie}" th:action="@{savemovie}" action="#" method="post">
+    <form th:object="${movie}" th:action="@{savemovie}" method="post">
         <input type="text" th:field="*{title}" class="form-control"
                placeholder="Title"/>
+        <span th:errors="*{title}" class="error"></span>
         <div style="clear: both; display: block; height: 10px;"></div>
         <input type="text" th:field="*{description}" class="form-control"
                placeholder="Description"/>
+        <span th:errors="*{description}" class="error"></span>
         <div style="clear: both; display: block; height: 10px;"></div>
         <input type="text" th:field="*{runtime}" class="form-control"
                placeholder="HH:MM:SS"/>
+        <span th:errors="*{runtime}" class="error"></span>
         <div style="clear: both; display: block; height: 10px;"></div>
         <input type="text" th:field="*{release_date}" class="form-control"
-               placeholder="YYYY-MM-DD"/>
+               placeholder="YYYY/MM/DD"/>
+        <span th:errors="*{release_date}" class="error"></span>
         <div style="clear: both; display: block; height: 10px;"></div>
         <input type="text" th:field="*{director}" class="form-control"
                placeholder="Director"/>
         <div style="clear: both; display: block; height: 10px;"></div>
         <input type="submit" class="btn btn-success" value="Save"></input>
+        <a href="/movies" class="btn btn-dunger">Cancel</a>
     </form>
 </div>
 </body>

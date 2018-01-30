@@ -4,15 +4,27 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 public class Movie {
     private int id;
+    @NotNull
+    @Size(min = 1, message = "Title must not be empty")
     private String title;
+    @NotNull
+    @Size(min = 1, message = "Description must not be empty")
     private String description;
+    @NotNull
+    @Size(min = 1)
+    @Pattern(regexp = "^(?:(?:([01]?\\d|2[0-3]):)?([0-5]?\\d):)?([0-5]?\\d)$", message = "Not a valid time")
     private String runtime;
+    @NotNull
+    @Size(min = 1)
+    @Pattern(regexp = "((?:19|20)\\d\\d)/(0?[1-9]|1[012])/([12][0-9]|3[01]|0?[1-9])", message = "Not a valid date")
     private String release_date;
     private String director;
     private Set<Actor> actors = new HashSet<Actor>();

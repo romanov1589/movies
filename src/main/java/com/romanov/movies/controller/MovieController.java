@@ -7,8 +7,11 @@ import com.romanov.movies.repository.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -34,11 +37,16 @@ public class MovieController {
     }
 
     @RequestMapping(value = "savemovie", method = RequestMethod.POST)
-    public String save(Movie movie){
-        movieRepository.save(movie);
-        return "redirect:/movies";
-    }
+    public String save(@ModelAttribute @Valid Movie movie, BindingResult bindingResult) {
 
+        if (bindingResult.hasErrors()) {
+            return "addMovie";
+        }
+            movieRepository.save(movie);
+            return "redirect:/movies";
+
+
+    }
 //    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
 //    public String editRemoveEmployee(@PathVariable("id") Long studentId, Model model) {
 //        repository.delete(studentId);
@@ -75,9 +83,10 @@ public class MovieController {
         return "redirect:/movies";
     }
 
-    @RequestMapping(value = "getmovies", method = RequestMethod.GET)
-    public @ResponseBody
-    List<Movie> getMovies() {
-        return (List<Movie>)movieRepository.findAll();
-    }
+//    @RequestMapping(value = "getmovies", method = RequestMethod.GET)
+//    public @ResponseBody
+//    List<Movie> getMovies() {
+//        return (List<Movie>)movieRepository.findAll();
+//    }
+
 }
