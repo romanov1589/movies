@@ -4,6 +4,9 @@ package com.romanov.movies.controller;
 import com.romanov.movies.model.Actor;
 import com.romanov.movies.model.Movie;
 import com.romanov.movies.repository.ActorRepository;
+import org.jsondoc.core.annotation.Api;
+import org.jsondoc.core.annotation.ApiMethod;
+import org.jsondoc.core.pojo.ApiStage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -18,11 +21,16 @@ import javax.validation.Valid;
 import java.util.List;
 
 @Controller
-public class ActorController extends WebMvcConfigurerAdapter {
+@Api(
+        name="Actor API",
+        description = "Provides a list of methods that manage actors",
+        stage= ApiStage.RC)
+public class ActorController {
     @Autowired
     private ActorRepository actorRepository;
 
     @RequestMapping("/actors")
+    @ApiMethod(description = "Our index page")
     public String index(Model model) {
         List<Actor> actors = (List<Actor>) actorRepository.findAll();
         model.addAttribute("actors", actors);
@@ -30,12 +38,14 @@ public class ActorController extends WebMvcConfigurerAdapter {
     }
 
     @RequestMapping(value = "addactor")
+    @ApiMethod(description = "Our index page")
     public String addActor(Model model){
         model.addAttribute("actor", new Actor());
         return "addActor";
     }
 
     @PostMapping(value = "saveactor")
+    @ApiMethod(description = "Our index page")
     public String save(@ModelAttribute @Valid Actor actor, BindingResult bindingResult){
 
         if(bindingResult.hasErrors()){
@@ -46,6 +56,7 @@ public class ActorController extends WebMvcConfigurerAdapter {
     }
 
     @RequestMapping(value = "/deleteactor/{id}", method = RequestMethod.GET)
+    @ApiMethod(description = "Our index page")
     public String removeActor(@PathVariable("id") Integer actorId, Model model) {
         try {
             actorRepository.delete(actorId);
@@ -55,12 +66,14 @@ public class ActorController extends WebMvcConfigurerAdapter {
         return "redirect:/actors";
     }
     @RequestMapping(value = "/editactor/{id}", method = RequestMethod.GET)
+    @ApiMethod(description = "Our index page")
     public String editActor(@PathVariable("id") Integer actorId, Model model){
         Actor actor = actorRepository.getOne(actorId);
         model.addAttribute("actor", actor);
         return "editActor";
     }
     @RequestMapping(value = "/editactor/{id}", method = RequestMethod.POST)
+    @ApiMethod(description = "Our index page")
     public String editActor(@ModelAttribute("actor") Actor actor, @PathVariable("id") Integer actorId, Model model){
         Actor currentActor = actorRepository.getOne(actorId);
         currentActor.setFirstName(actor.getFirstName());

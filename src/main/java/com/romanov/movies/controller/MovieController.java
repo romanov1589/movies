@@ -4,6 +4,9 @@ import com.romanov.movies.model.Actor;
 import com.romanov.movies.model.Movie;
 import com.romanov.movies.repository.ActorRepository;
 import com.romanov.movies.repository.MovieRepository;
+import org.jsondoc.core.annotation.Api;
+import org.jsondoc.core.annotation.ApiMethod;
+import org.jsondoc.core.pojo.ApiStage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +18,10 @@ import javax.validation.Valid;
 import java.util.List;
 
 @Controller
+@Api(
+        name="Movie Factory API",
+        description = "Provides a list of methods that manage movies",
+        stage= ApiStage.RC)
 public class MovieController {
     @Autowired
     private MovieRepository movieRepository;
@@ -22,21 +29,33 @@ public class MovieController {
     @Autowired
     private ActorRepository actorRepository;
 
+    @RequestMapping("/")
+    @ApiMethod(description = "Our index page")
+    public String index(){
+        return "redirect:/login";
+    }
+
+    @RequestMapping("/login")
+    @ApiMethod(description = "Got to login page")
+    public String login() {
+        return "login";
+    }
 
     @RequestMapping("/movies")
-    public String index(Model model) {
+    @ApiMethod(description = "Get a list of all movies in the database")
+    public String movies(Model model) {
         List<Movie> movies = (List<Movie>) movieRepository.findAll();
         model.addAttribute("movies", movies);
         return "movies";
     }
-
-    @RequestMapping(value = "addmovie")
+    @RequestMapping(value = "/addmovie")
+    @ApiMethod(description = "Got add movie page")
     public String addMovie(Model model){
         model.addAttribute("movie", new Movie());
         return "addMovie";
     }
-
-    @RequestMapping(value = "savemovie", method = RequestMethod.POST)
+    @ApiMethod(description = "Add new movie to database")
+    @RequestMapping(value = "/savemovie", method = RequestMethod.POST)
     public String save(@ModelAttribute @Valid Movie movie, BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
@@ -47,25 +66,23 @@ public class MovieController {
 
 
     }
-//    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
-//    public String editRemoveEmployee(@PathVariable("id") Long studentId, Model model) {
-//        repository.delete(studentId);
-//        return "redirect:/students";
-//    }
 
     @RequestMapping(value = "addMovieActor/{id}", method = RequestMethod.GET)
+    @ApiMethod(description = "Go to page there we can add a new actor to movie")
     public String addActor(@PathVariable("id") Integer movieId, Model model){
         model.addAttribute("actors", actorRepository.findAll());
         model.addAttribute("movie", movieRepository.findOne(movieId));
         return "addMovieActor";
     }
     @RequestMapping(value = "/deletemovie/{id}", method = RequestMethod.GET)
+    @ApiMethod(description = "Delete movie from database by id")
     public String editRemoveMovie(@PathVariable("id") Integer movieId, Model model) {
         movieRepository.delete(movieId);
         return "redirect:/movies";
     }
 
     @RequestMapping(value="/movie/{id}/actors", method=RequestMethod.GET)
+    @ApiMethod(description = "Add new actor to movie")
     public String moviesAddActor(@PathVariable Integer id, @RequestParam Integer actorId, Model model) {
         Actor actor = actorRepository.findOne(actorId);
         Movie movie = movieRepository.findOne(id);
@@ -83,10 +100,5 @@ public class MovieController {
         return "redirect:/movies";
     }
 
-//    @RequestMapping(value = "getmovies", method = RequestMethod.GET)
-//    public @ResponseBody
-//    List<Movie> getMovies() {
-//        return (List<Movie>)movieRepository.findAll();
-//    }
 
 }

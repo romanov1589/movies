@@ -7,8 +7,21 @@
 
 </head>
 <body>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <h2>Actors</h2>
+        </div>
+        <div class="col-md-6"><span class="pull-right">
+            <p th:inline="text"><h4>Welcome [[${#httpServletRequest.remoteUser}]]</h4></p>
+            <a href="/logout" class="btn">Log out</a>
+        </span></div>
+    </div>
+</div>
+
 <div class="col-md-4">
-    <h1>Actors</h1>
+    <a href="/movies" class="btn">Movies</a>
 </div>
 <div style="padding:0 20px">
     <table class="table table-striped">
